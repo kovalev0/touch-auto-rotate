@@ -1,0 +1,9 @@
+[Unit]
+Description=Writes current orientation of device to /path/orientation.txt (needed for touch-screen-rotator)
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+# ExecStart will be placed here at installation
