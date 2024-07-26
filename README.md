@@ -3,6 +3,8 @@ Based on the fork https://github.com/DanielMehlber/mate-touch-rotate
 
 Systemd service to identify orientation of device in order to rotate display and touchscreen.
 
+Tested on ALT linux distro
+
 ## Install
 
 ```
