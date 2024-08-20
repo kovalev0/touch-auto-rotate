@@ -46,7 +46,7 @@ chmod a+w $NAME_VAR_AUTO_ROTATE $NAME_VAR_AUTO_ROTATE_ONLY_TABLET
 # so let's take the first available one
 
 found=false
-for home in "${HOME_DIRS[@]}"; do
+for home in ${HOME_DIRS[@]}; do
   if [ -d "$home" ]; then
     if [ -f "$home/.Xauthority" ]; then
       USER_NAME=$(basename "$home")
