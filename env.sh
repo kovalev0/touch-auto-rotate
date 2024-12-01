@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 DIR_NAME="touch-auto-rotate"
 DIR_DATA="/usr/share/$DIR_NAME/"
