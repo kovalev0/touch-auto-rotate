@@ -1,8 +1,8 @@
 #!/bin/bash -x
 
 DIR_NAME="touch-auto-rotate"
-DIR_DATA="/usr/local/bin/$DIR_NAME/"
-DIR_SERVICES="/etc/systemd/system/"
+DIR_DATA="/usr/share/$DIR_NAME/"
+DIR_SERVICES="/lib/systemd/system/"
 DIR_VAR="/var/lib/"
 
 # store display orientation from monitor-sensor
