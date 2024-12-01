@@ -12,7 +12,7 @@ su-
 apt-get install  xinput iio-sensor-proxy
 cd /path/to/dir/touch-auto-rotate
 chmod +x ./*.sh
-bash ./install.sh [DEVICE]    # default "FTSC1000:00 2808:5682" touchscreen for Aquarius
+bash ./install.sh [DEVICE]    # default search in conf.d/list-touchscreens.conf
 ```
 
 You can find out the names or ids of your devices by using

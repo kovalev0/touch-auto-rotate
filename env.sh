@@ -30,8 +30,8 @@ NAME_AUTOROTATE_ONLY_TABLET_DIS="autorotate_only_tablet_dis.sh"
 NAME_WRITER_SERVICE="device-orientation-updater.service"
 NAME_LISTENER_SERVICE="touch-screen-rotator.service"
 
-# overvrite
-NAME_TOUCHSCREEN="FTSC1000:00 2808:5682"
+# list of touchscreen's
+NAME_TOUCHSCREEN_LIST="list-touchscreens.conf"
 
 # for acces to X server
 HOME_DIRS=$(find /home -mindepth 1 -maxdepth 1 -type d)

@@ -10,7 +10,34 @@ source $PWD/env.sh
 
 if [ -z "$1" ]; then
     echo "Usage:   $0 <touchscreen_name>"
-    echo "Set default: $NAME_TOUCHSCREEN"
+    # check list of touchscreen's
+    if [ -f "$DIR_DATA/conf.d/$NAME_TOUCHSCREEN_LIST" ]; then
+	TOUCHSCREEN_LIST_FILE="$DIR_DATA/conf.d/$NAME_TOUCHSCREEN_LIST"
+    elif [ -f "conf.d/$NAME_TOUCHSCREEN_LIST" ]; then
+	TOUCHSCREEN_LIST_FILE="conf.d/$NAME_TOUCHSCREEN_LIST"
+    else
+	echo "Touchscreen list file not found in '$DIR_DATA' or current directory."
+	TOUCHSCREEN_LIST_FILE=""
+    fi
+
+    touchscreen_found=false
+
+    if [ -n "$TOUCHSCREEN_LIST_FILE" ]; then
+	echo "Using touchscreen list file: $TOUCHSCREEN_LIST_FILE"
+	while IFS= read -r touchscreen_name; do
+		if xinput list | grep -q "$touchscreen_name"; then
+			NAME_TOUCHSCREEN="$touchscreen_name"
+			echo "Found touchscreen in file: $NAME_TOUCHSCREEN"
+			touchscreen_found=true
+			break
+		fi
+	done < "$TOUCHSCREEN_LIST_FILE"
+    fi
+
+    if ! $touchscreen_found; then
+	echo "No touchscreen from the list found in xinput."
+	NAME_TOUCHSCREEN="NOT_FOUND_TOUCHSCREEN"
+    fi
 else
     NAME_TOUCHSCREEN="$1"
 fi
@@ -21,18 +48,23 @@ if [ -z "$XINPUT_LIST" ]; then
     exit 1
 fi
 
-sed -i "s|^NAME_TOUCHSCREEN=.*|NAME_TOUCHSCREEN=\"$NAME_TOUCHSCREEN\"|" "$PWD/env.sh"
+echo "Using touchscreen: $NAME_TOUCHSCREEN"
 
 # create directories
 echo "$DIR_NAME scripts  in ${DIR_DATA} directory"
-echo "$DIR_NAME variables in ${DIR_VAR} directory"
+echo "$DIR_NAME/conf.d/ conf file  in ${DIR_DATA}/conf.d/ directory"
+echo "$DIR_VAR variables in ${DIR_VAR} directory"
 
 mkdir -p $DIR_DATA
+mkdir -p $DIR_DATA/conf.d
 mkdir -p $DIR_VAR
 
 # move exec scripts to data directory
 echo "Copying scripts to $DIR_DATA directory..."
 cp -f  $PWD/$NAME_WRITER $PWD/$NAME_LISTENER $PWD/env.sh $DIR_DATA
+
+# move .conf
+cp -f $PWD/conf.d/$NAME_TOUCHSCREEN_LIST $DIR_DATA/conf.d/
 
 # en/dis scripts:
 cp -f  $PWD/$NAME_AUTOROTATE_EN $PWD/$NAME_AUTOROTATE_DIS $DIR_DATA
